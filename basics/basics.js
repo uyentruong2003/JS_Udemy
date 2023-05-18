@@ -162,27 +162,53 @@
 //     console.log("Offer everything on the menu")
 // }
 
-//----------------------------------------------
-// VARIABLE SCOPE:
+// //----------------------------------------------
+// // VARIABLE SCOPE:
 
-// JS uses Lexical Scope (Static Scope):
-    // Global scope - Defined outside of ALL code blocks {}
-        // Local scope - Defined inside a code block {}
-// In a scope, you can access variables defined in that scope, or in any parent/ancestor scopes
-let var1 = 'varOne' //global var
+// // JS uses Lexical Scope (Static Scope):
+//     // Global scope - Defined outside of ALL code blocks {}
+//         // Local scope - Defined inside a code block {}
+// // In a scope, you can access variables defined in that scope, or in any parent/ancestor scopes
+// let var1 = 'varOne' //global var
 
-// var1: global scope
-    //var2: local scope #1
-        //var4: local scope #2
-    //var3: local scope #1
-if (true) {
-    console.log(varOne)
-    let var2 = 'varTwo' //local var, child of global scope 
-    if (true) {
-        let var4 = 'varFour' // local var, child of the scope containing var2 & var1
-    }
-}
-if (true){
-    let var3 = 'varThree' //local var, child of global scope 
-}
+// // var1: global scope
+//     //var2: local scope #1
+//         //var4: local scope #2
+//     //var3: local scope #1
+// if (true) {
+//     console.log(var1)
+//     let var2 = 'varTwo' //local var, child of global scope 
+//     if (true) {
+//         let var4 = 'varFour' // local var, child of the scope containing var2 & var1
+//     }
+// }
+// if (true){
+//     let var3 = 'varThree' //local var, child of global scope 
+// }
 
+// // 2 vars can have the same name if they're in different scopes
+// let name = "Andrew"
+
+// if (true) {
+//     let name = "Mike"
+
+//     if (true) {
+//         name = "Jen" //change Mike to Jen
+//         console.log(name) //print out Jen
+//     }
+// }
+
+// if (true) {
+//     console.log(name) //print out Andrew
+// }
+
+// //Leaked Global:
+
+// if(true) {
+//     name1 = "Katy" // tho name1 is not declared, the program understands as it is and makes it into a global variable
+//     console.log(name1)
+// }
+
+// if (true) {
+//     console.log(name1)
+// }
