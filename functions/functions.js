@@ -93,17 +93,64 @@
 // console.log(tip20)
 // console.log(noTip)
 
-//----------------------------------------------
-// FUNCTION SCOPE
+// //----------------------------------------------
+// // FUNCTION SCOPE
 
-// Global scope (convertFtoC, freezing, boiling)
-    // Local scope (fahrenheit, celsius)
-let convertFtoC = function(fahrenheit) {
-    let celsius = (fahrenheit - 32) * 5/9
-    return celsius
-}
+// // Global scope (convertFtoC, freezing, boiling)
+//     // Local scope 1 (fahrenheit, celsius)
+//         // Local scope 2 (isFreezing)
+// let convertFtoC = function(fahrenheit) {
+//     let celsius = (fahrenheit - 32) * 5/9
+//     if (celsius <= 0) {
+//         let isFreezing = true
+//     }
+//     return celsius
+// }
 
-let freezing = convertFtoC(32)
-let boiling = convertFtoC(212)
-console.log("32*F freezing point of water is ",freezing, "*C")
-console.log("212*F boiling point of water is ",boiling, "*C")
+// let freezing = convertFtoC(32)
+// let boiling = convertFtoC(212)
+// console.log("32*F freezing point of water is ",freezing, "*C")
+// console.log("212*F boiling point of water is ",boiling, "*C")
+
+// //----------------------------------------------
+// // TEMPLATE STRINGS
+// let name = "Uyen"
+// let age = 20
+// console.log(`Hey, my name is ${name}! I'm ${age} years old`)
+
+// let getScoreText = function (name = "N/A", score = 0){ // set default values. if there are no arguments provided, these assigned values will show up
+//     // return "Name: " + name + " - Score: " + score
+//     return `Name: ${name} - Score: ${score}`
+// }
+
+// let result = getScoreText("Uyen", 100)
+// console.log(result)
+
+// // Challenge:
+// let getTip = function(total, tipPercent = 0.15){
+//     let tip = tipPercent*total
+//     let output = `A ${0.15*100}% tip on ${total} would be $${tip}`
+//     return output
+// }
+// console.log(getTip(40, .15))
+
+// //----------------------------------------------
+// // FUNCTION PUT-TOGETHER
+// // Build a grade calculator:
+// let gradeCalc = function(studentScore, totalScore){
+//     let grade = (studentScore/totalScore) *100
+//     let gradeLetter = ""
+//     if (grade >=90){
+//         gradeLetter = "A"
+//     } else if (grade >= 80){
+//         gradeLetter = "B"
+//     } else if (grade >= 70){
+//         gradeLetter = "C"
+//     } else if (grade >= 60){
+//         gradeLetter = "D"
+//     } else{
+//         gradeLetter = "F"
+//     }
+//     return `${studentScore}/${totalScore} -> You got a ${gradeLetter} (${grade}%)`
+// }
+// console.log(gradeCalc(15,20))
