@@ -177,5 +177,81 @@
 // console.log(restaurant)
 // console.log(restaurant.checkAvailability(5))
 
+// //----------------------------------------------
+// // STRING METHODS
+// let name = "Uyen Truong"
+// // length property:
+// console.log(name.length)
+
+// // toUpperCase() Method:
+// console.log(name.toUpperCase())
+
+// // toLowerCase() Method:
+// console.log(name.toLowerCase())
+
+// //includes() Method: find certain characters/strings of a string
+// let password = " abc123password098 "
+// console.log(password.includes('abc')) //check if var password contains the string "abc"
+
+// // trim() Method: remove certain characters/string in a string
+//     //str.trim() with no arg passed in - remove whitespace before & after the string
+// console.log(password)
+// console.log(password.trim())
+
+// // List of STRING METHODS: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String
+
+// // Challenge:
+
+// //isValidPassword function. Criteria:
+//     // length >= 8
+//     // doesn't contain the word password
+
+// let isValidPassword = function(password){
+//     // if ((password.length > 8) && (!password.includes("password"))){
+//     //     return true
+//     // } else {
+//     //     return false
+//     // }
+//     // Shorter way:
+//     return (password.length > 8) && (!password.includes("password"))
+// }
+
+// console.log(isValidPassword("asdfp"))
+// console.log(isValidPassword("abc123!@#$%^&"))
+// console.log(isValidPassword("asdfghpassword"))
+
 //----------------------------------------------
-// STRING METHODS:
+// NUMBER METHODS
+let num = 103.941
+// toFixed(): fix the number to certain # of decimal places
+console.log(num.toFixed(2))
+
+// Math.round(): round to the NEAREST integer
+console.log(Math.round(num))
+
+// Math.floor(): round to the NEAREST LOWER integer
+console.log(Math.floor(num))
+
+// Math.ceil(): round to the NEAREST HIGHER integer
+console.log(Math.ceil(num))
+
+// Math.random(): generate random number
+let min = 10
+let max = 20
+let randomNum = Math.floor((Math.random() * (max - min + 1))) + min //formula to get the range of a given min & max
+// no arg --> 0 - .9999999999~
+console.log(randomNum)
+
+// List of NUMBER METHODS: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number
+// List of MATH-RELATED METHODS: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math?retiredLocale=vi
+
+// Challenge:
+// random 1 - 5 --> true if correct
+let makeGuess = function(correct){
+    let min = 1
+    let max = 5
+    let randomNum = Math.floor((Math.random() * (max - min + 1))) + min
+    console.log(randomNum)
+    return randomNum === correct
+}
+console.log(makeGuess(1))
