@@ -220,38 +220,122 @@
 // console.log(isValidPassword("abc123!@#$%^&"))
 // console.log(isValidPassword("asdfghpassword"))
 
-//----------------------------------------------
-// NUMBER METHODS
-let num = 103.941
-// toFixed(): fix the number to certain # of decimal places
-console.log(num.toFixed(2))
+// //----------------------------------------------
+// // NUMBER METHODS
+// let num = 103.941
+// // toFixed(): fix the number to certain # of decimal places
+// console.log(num.toFixed(2))
 
-// Math.round(): round to the NEAREST integer
-console.log(Math.round(num))
+// // Math.round(): round to the NEAREST integer
+// console.log(Math.round(num))
 
-// Math.floor(): round to the NEAREST LOWER integer
-console.log(Math.floor(num))
+// // Math.floor(): round to the NEAREST LOWER integer
+// console.log(Math.floor(num))
 
-// Math.ceil(): round to the NEAREST HIGHER integer
-console.log(Math.ceil(num))
+// // Math.ceil(): round to the NEAREST HIGHER integer
+// console.log(Math.ceil(num))
 
-// Math.random(): generate random number
-let min = 10
-let max = 20
-let randomNum = Math.floor((Math.random() * (max - min + 1))) + min //formula to get the range of a given min & max
-// no arg --> 0 - .9999999999~
-console.log(randomNum)
+// // Math.random(): generate random number
+// let min = 10
+// let max = 20
+// let randomNum = Math.floor((Math.random() * (max - min + 1))) + min //formula to get the range of a given min & max
+// // no arg --> 0 - .9999999999~
+// console.log(randomNum)
 
-// List of NUMBER METHODS: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number
-// List of MATH-RELATED METHODS: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math?retiredLocale=vi
+// // List of NUMBER METHODS: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number
+// // List of MATH-RELATED METHODS: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math?retiredLocale=vi
 
-// Challenge:
-// random 1 - 5 --> true if correct
-let makeGuess = function(correct){
-    let min = 1
-    let max = 5
-    let randomNum = Math.floor((Math.random() * (max - min + 1))) + min
-    console.log(randomNum)
-    return randomNum === correct
-}
-console.log(makeGuess(1))
+// // Challenge:
+// // random 1 - 5 --> true if correct
+// let makeGuess = function(correct){
+//     let min = 1
+//     let max = 5
+//     let randomNum = Math.floor((Math.random() * (max - min + 1))) + min
+//     console.log(randomNum)
+//     return randomNum === correct
+// }
+// console.log(makeGuess(1))
+
+// //----------------------------------------------
+// // CONSTANT VARIABLES
+// const isRaining = true // replace 'let' with 'const'
+// // the constant var CANNOT be modified
+// // isRaining = false //--> crash
+// console.log(isRaining)
+
+// const person = {
+//     age: 27
+// }
+// console.log(person)
+
+// // can still modify a constant object's properties' values:
+// person.age = 28
+// console.log(person)
+
+// // CANNOT modify a constant object's properties:
+// // person = {
+// //     age: 27,
+// //     name: "John Doe"
+// // }
+// // console.log(person)
+
+// // Challenge:
+// // Rewrite grade calculator using const if applicable
+// const gradeCalc = function(studentScore, totalScore){
+//     const grade = (studentScore/totalScore) *100
+//     let gradeLetter = ""
+//     if (grade >=90){
+//         gradeLetter = "A"
+//     } else if (grade >= 80){
+//         gradeLetter = "B"
+//     } else if (grade >= 70){
+//         gradeLetter = "C"
+//     } else if (grade >= 60){
+//         gradeLetter = "D"
+//     } else{
+//         gradeLetter = "F"
+//     }
+//     return `${studentScore}/${totalScore} -> You got a ${gradeLetter} (${grade}%)`
+// }
+// console.log(gradeCalc(15,20))
+
+// //----------------------------------------------
+// // VAR-BASED VARIABLES
+
+// // Creating a variable with 'var' instead of 'let'
+// // Similar functions to 'let' but has some drawbacks:
+//     // (1) Can create multiples vars with the same name and there's no problem
+//     var firstName = 'Uyen'
+//     firstName = 'Jane'
+
+//     var firstName = 'John'
+
+//     console.log(firstName)
+//     // (2) 'var' is function-scoped NOT block-scoped
+//         // BLOCK-SCOPED:
+//         if (true){
+//             var lastName = 'Doe' // wouldn't be accessible if declared using 'let'
+//         }
+//         console.log(lastName) // still print out the last name "Doe" even though it is in a local scope.
+//         // FUNCTION-SCOPED:
+//         const setName = function () {
+//             var middleName = 'Hoai'
+//         }
+
+//         setName()
+//         // console.log(middleName) //--> middleName is not accessible because it is in a function
+//     // (3) The order doesn't matter for variable declaration
+//     // (a) When the variable is unassigned:
+//     console.log(age)
+//     var age
+//     //... still print 'undefined' the same as:
+//     var age
+//     console.log(age)
+//     // (b) When the variable is assigned:
+//     age = 10
+//     console.log(age)
+//     var age
+//     //... still print '10' the same as:
+//     var year
+//     year = 10
+//     console.log(year)
