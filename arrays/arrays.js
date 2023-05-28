@@ -101,11 +101,96 @@
 //     console.log(notes[count])
 // }
 
-//----------------------------------------------
-// SEARCHING ARRAY
+// //----------------------------------------------
+// // SEARCHING ARRAY
 
-// Turn the item to individual objects:
-const notes = ['Note 1', 'Note 2', 'Note 3', 'Note 4', 'Note 5']
+// // Turn the item to individual objects:
+// const notes = ['Note 1', 'Note 2', 'Note 3', 'Note 4', 'Note 5']
+// const noteArr = [{
+//     title: 'My next trip',
+//     body: 'I would like to go to Spain'
+// },{
+//     title: 'Habbits to work on',
+//     body: 'Exercise. Eating a bit better'
+// },{
+//     title: 'Office modification',
+//     body: 'Get new seats'
+// }]
+
+// // .indexOf(item): find the index for the specified item
+// console.log(notes.indexOf('Note 4'))
+
+// // Search for an item that doesn't exist in the array:
+// console.log(noteArr.indexOf({title: "Packing list", body: "Don't forget sunscreen"})) //output -1
+
+// let someObject = {
+//     name: 'obj1',
+//     category: 'chair'
+// }
+// let otherObject = {
+//     name: 'obj2',
+//     category: 'desk'
+// }
+// console.log(someObject === otherObject) // print out true/false
+
+// // .findIndex(): allow passing in a function
+// const index = noteArr.findIndex(function (item, index){
+//     console.log(item) // stop printing when the condition below is true
+//     return item.title === 'Habbits to work on' // index = the index of the 'Habbits to work on' item if it exists in the array
+// })
+
+// // A function to search the noteArr and find a specified note title using .findIndex()
+// const findNote = function(noteArr, noteTitle){
+//     const index = noteArr.findIndex(function (item, index) {
+//         return item.title.toLowerCase() === noteTitle.toLowerCase() //return the index of the item that has the title passed in 'noteTitle', if not, return -1
+//         // this return is for the callback function    
+//     })
+//     // this return print out the item at the found index
+//     return noteArr[index]
+// }
+
+// // Equivalent functionality to findNote function- using .find() method;
+//     //however, the .find() method return the entire item rather than the index only
+// const findNote2 = function(noteArr, noteTitle){
+//     return noteArr.find( function (item, index) {
+//         return item.title.toLowerCase() === noteTitle.toLowerCase()
+//     })
+// }
+
+// const note =  findNote(noteArr, 'Office modification')
+// console.log(note)
+
+// const note2 =  findNote2(noteArr, 'Office modification')
+// console.log(note2)
+
+// //----------------------------------------------
+// // FILTERING ARRAY
+
+// const noteArr = [{
+//     title: 'My next trip',
+//     body: 'I would like to go to Spain'
+// },{
+//     title: 'Habbits to work on',
+//     body: 'Exercise. Eating a bit better'
+// },{
+//     title: 'Office modification',
+//     body: 'Get new seats'
+// }]
+
+// // .filter(): only take FUNCTION as argument
+// const filterNotes = function (noteArr, text){
+//     return noteArr.filter(function (note, index) {
+//         const isTitleMatch = note.title.toLowerCase().includes(text.toLowerCase())
+//         const isBodyMatch = note.body.toLowerCase().includes(text.toLowerCase())
+//         // return if the title or the body is match with the text typed in
+//         return isTitleMatch || isBodyMatch
+//     })
+// }
+// console.log(filterNotes(noteArr, 'e'))
+
+//----------------------------------------------
+// SORTING ARRAY
+
 const noteArr = [{
     title: 'My next trip',
     body: 'I would like to go to Spain'
@@ -117,56 +202,28 @@ const noteArr = [{
     body: 'Get new seats'
 }]
 
-// .indexOf(item): find the index for the specified item
-console.log(notes.indexOf('Note 4'))
+// .sort(): sort array alphabetically by default; can pass in a COMPARE FUNCTION, 
+    // but cannot be used for an array of object
 
-// Search for an item that doesn't exist in the array:
-console.log(noteArr.indexOf({title: "Packing list", body: "Don't forget sunscreen"})) //output -1
-
-let someObject = {
-    name: 'obj1',
-    category: 'chair'
-}
-let otherObject = {
-    name: 'obj2',
-    category: 'desk'
-}
-console.log(someObject === otherObject) // print out true/false
-
-// .findIndex(): allow passing in a function
-const index = noteArr.findIndex(function (item, index){
-    console.log(item) // stop printing when the condition below is true
-    return item.title === 'Habbits to work on' // index = the index of the 'Habbits to work on' item if it exists in the array
-})
-
-// A function to search the noteArr and find a specified note title using .findIndex()
-const findNote = function(noteArr, noteTitle){
-    const index = noteArr.findIndex(function (item, index) {
-        return item.title.toLowerCase() === noteTitle.toLowerCase() //return the index of the item that has the title passed in 'noteTitle', if not, return -1
-        // this return is for the callback function    
-    })
-    // this return print out the item at the found index
-    return noteArr[index]
-}
-
-// Equivalent functionality to findNote function- using .find() method
-const findNote2 = function(noteArr, noteTitle){
-    return noteArr.find( function (item, index) {
-        return item.title.toLowerCase() === noteTitle.toLowerCase()
+console.log('a' < 'A') //capital letters always come before the lower-case version
+const sortNotes = function (noteArr){
+    noteArr.sort(function (a,b) { //COMPARE FUNCTION between a & b
+        // a comes first  --> return -1
+        // b comes first --> return 1
+        // order remains unchanged --> return 0
+        if (a.title.toLowerCase() < b.title.toLowerCase()) {
+            return -1
+        } else if (a.title.toLowerCase() > b.title.toLowerCase()) {
+            return 1
+        } else {
+            return 0
+        }
     })
 }
 
-const note =  findNote(noteArr, 'Office modification')
-console.log(note)
-
-const note2 =  findNote2(noteArr, 'Office modification')
-console.log(note2)
-
-
-
-
-
-
+console.log(noteArr)
+sortNotes(noteArr)
+console.log(noteArr)
 
 
 
