@@ -96,10 +96,38 @@ const filterToDo = function (todos, completed){
      return filtered
 }
 
+// console.log(todos)
+// // filter only completed todos
+// let completed = filterToDo(todos, true)
+// console.log(completed)
+// // filter only incompleted todos
+// let needAction = filterToDo(todos, false)
+// console.log(needAction)
+
+// (4) Create a function to sort the todos with the incomplete tasks comes first
+const sortToDo = function (todos){
+    const sorted = todos.sort( function (a,b){
+        // a incomplete, b completed --> a comes first
+        if (!a.completed && b.completed){
+            return -1
+        // a completed, b incompleted --> b comes first
+        } else if (a.completed && !b.completed){
+            return 1
+        // both incomplete/ both completed:
+        } else {
+            // whichever comes first alphabetically comes first;
+            if (a.text < b.text) {
+                return -1
+            } else if (b.text < a.text) {
+                return 1
+            // else, keep the same order
+            } else {
+                return 0
+            }
+        }
+    })
+    return sorted
+}
+
 console.log(todos)
-// filter only completed todos
-let completed = filterToDo(todos, true)
-console.log(completed)
-// filter only incompleted todos
-let needAction = filterToDo(todos, false)
-console.log(needAction)
+console.log(sortToDo(todos))
