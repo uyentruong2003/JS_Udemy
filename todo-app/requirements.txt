@@ -1,0 +1,5 @@
+1. create a new HTML
+2.  An h1 and 5 p tags
+3. Server that folder and view the doc in the browser
+4. Create the link to a JS file
+5. In JS, remove all p tags that contains the word 'the'
