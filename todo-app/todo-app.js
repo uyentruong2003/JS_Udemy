@@ -14,39 +14,19 @@ const todos = [{
     text: 'Exercise',
     completed: true
 }]
-// // Link the JS file to the html file
-// const ps = document.querySelectorAll('p')
-// // If the paragraph contains 'the', remove
-// ps.forEach(function(p){
-//     if (p.textContent.includes('the')) {
-//         console.log(p.textContent) //print in console
-//         p.remove()
-//     }
-// })
 
-// Print a summary: you have 2 todos left
-// const getSummary = function(todos){
-//     let incompleteNum = 0
-//     todos.forEach(function(todo){
-//         if (!todo.completed){
-//             incompleteNum ++
-//         }
-//     })
-//     return `You have ${incompleteNum} todos left`
-// }
+// get summary:
+const getSummary = function (todos){
+    // filter out the incompleteTodos
+    const incompleteTodos = todos.filter( function (todo) {
+        return !todo.completed
+    })
+    //query the element & add content
+    const summary = document.querySelector('#summary')
+    summary.textContent = `You have ${incompleteTodos.length} todos left:`
+}
 
-// Second way to filter out the incompleteTodos
-const incompleteTodos = todos.filter( function (todo) {
-    return !todo.completed
-})
-//(1) create element
-const summary = document.createElement('h3')
-//(2) create content
-summary.textContent = `You have ${incompleteTodos.length} todos left:`
-//(3) append to the body tag
-document.querySelector('#all-todos').appendChild(summary)
-
-// Sort the arrays:
+// FUNCTION: Sort the array
 const sortTodos = function (todos){
     const sorted = todos.sort(function (a,b){
         if (!a.completed && b.completed){
@@ -59,34 +39,32 @@ const sortTodos = function (todos){
     })
 }
 
-sortTodos(todos)
-console.log(todos)
-// Add a p for each todo above
-todos.forEach(function(todo){
-    //(1) create element
-    const p = document.createElement('p')
-    //(2) create content
-    if (!todo.completed){
-        p.textContent = `${todo.text} - incomplete`
-    } else {
-        p.textContent = `${todo.text} - completed`
-    }
-    
-    //(3) append to the body tag
-    document.querySelector('#all-todos').appendChild(p)
-})
+// FUNCTION: Add a p for each todo in array
+const displayTodos = function (todos){
+    getSummary(todos) // print the summary first
+    //clear the search result
+    document.querySelector('#search-result').innerHTML = ''
+    todos.forEach(function(todo){
+        //(1) create element
+        const p = document.createElement('p')
+        //(2) create content
+        if (!todo.completed){
+            p.textContent = `${todo.text} - incomplete`
+        } else {
+            p.textContent = `${todo.text} - completed`
+        }
+        //(3) append to the body tag
+        document.querySelector('#search-result').appendChild(p)
+    })
+}
 
-//Listen for new todo creation button
-document.querySelector('#add-todo').addEventListener('click', function (e){
-    console.log('Add a new todo...')
-})
-
-// Create an object to hold the search text
+// OBJECT: Create an object to hold the search text
 const search = {
     searchText: ''
 }
-// filter out the todos that contain the searchtext
-const renderNotes = function (todos,search){
+// FUNCTION: filter out the todos that contain the searchtext
+const renderTodos = function (todos,search){
+    getSummary(todos) //update the summary
     const filteredResult = todos.filter(function (todo){
         return todo.text.toLowerCase().includes(search.searchText.toLowerCase())
     })
@@ -95,13 +73,39 @@ const renderNotes = function (todos,search){
     // Print on screen the filtered result:
     filteredResult.forEach(function (todo){
         const p = document.createElement('p')
-        p.textContent = todo.text
+        if (!todo.completed){
+            p.textContent = `${todo.text} - incomplete`
+        } else {
+            p.textContent = `${todo.text} - completed`
+        }
         document.querySelector('#search-result').appendChild(p)
     })
 }
 
-//Listen for search box input
+// OFFICIAL PROGRAM:
+sortTodos(todos)
+displayTodos(todos)
+
+//Search Handling:
 document.querySelector('#search-todo').addEventListener('input', function (e){
     search.searchText = e.target.value
-    renderNotes(todos, search)
+    renderTodos(todos, search)
 })
+
+// Form Handling:
+document.querySelector('#new-todo-form').addEventListener('submit', function (e){
+    e.preventDefault() //clear default reaction
+    //create an object for the new todo
+    let newTodo = {
+        text: e.target.elements.newTodo.value,
+        completed: false
+    }
+    //add to the array
+    todos.push(newTodo)
+    e.target.elements.newTodo.value = '' //clear input
+    // sort the array (so the incomplete todos come first)
+    sortTodos(todos)
+    // re-display todos
+    renderTodos(todos,search)
+})
+

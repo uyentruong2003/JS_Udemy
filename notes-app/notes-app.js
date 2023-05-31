@@ -136,6 +136,9 @@ document.querySelector('#search-text').addEventListener('input', function (e){
 document.querySelector('#name-form').addEventListener('submit', function (e){
     // avoid the default behavior of refreshing the page with a new URL
     e.preventDefault()
-    // .element: access all the element in the field
-    e.target.element
+    // e.target.element: access all the elements in the field
+    // firstName.value(): get the value of the input tag named 'firstName':
+    console.log(e.target.elements.firstName.value)
+    // clear the previously entered value:
+    e.target.elements.firstName.value = ''
 })
