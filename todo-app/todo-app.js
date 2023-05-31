@@ -40,11 +40,11 @@ const incompleteTodos = todos.filter( function (todo) {
     return !todo.completed
 })
 //(1) create element
-const summary = document.createElement('p')
+const summary = document.createElement('h3')
 //(2) create content
 summary.textContent = `You have ${incompleteTodos.length} todos left:`
 //(3) append to the body tag
-document.querySelector('body').appendChild(summary)
+document.querySelector('#all-todos').appendChild(summary)
 
 // Sort the arrays:
 const sortTodos = function (todos){
@@ -69,14 +69,39 @@ todos.forEach(function(todo){
     if (!todo.completed){
         p.textContent = `${todo.text} - incomplete`
     } else {
-        p.textContent = `${todo.text} - needs action`
+        p.textContent = `${todo.text} - completed`
     }
     
     //(3) append to the body tag
-    document.querySelector('body').appendChild(p)
+    document.querySelector('#all-todos').appendChild(p)
 })
 
-//Listen for new todo creation
+//Listen for new todo creation button
 document.querySelector('#add-todo').addEventListener('click', function (e){
     console.log('Add a new todo...')
+})
+
+// Create an object to hold the search text
+const search = {
+    searchText: ''
+}
+// filter out the todos that contain the searchtext
+const renderNotes = function (todos,search){
+    const filteredResult = todos.filter(function (todo){
+        return todo.text.toLowerCase().includes(search.searchText.toLowerCase())
+    })
+    // Clear the previous search in the div
+    document.querySelector('#search-result').innerHTML = ''
+    // Print on screen the filtered result:
+    filteredResult.forEach(function (todo){
+        const p = document.createElement('p')
+        p.textContent = todo.text
+        document.querySelector('#search-result').appendChild(p)
+    })
+}
+
+//Listen for search box input
+document.querySelector('#search-todo').addEventListener('input', function (e){
+    search.searchText = e.target.value
+    renderNotes(todos, search)
 })

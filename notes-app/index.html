@@ -4,13 +4,29 @@
     <head>
         <!--attribute can be specified within the tag to customize the tag-->
         <!--src: is attribute 'source'-->
-        <script src="notes-app.js"></script>
     </head>
     <body>
         <h1>Notes App</h1>
         <h2>Take notes and never ever forget</h2>
+        <!-- placeholder: add a default text to the searchbox before user types text in -->
+        <input id="search-text" type="text" placeholder="Filter notes">
+        <!-- div is an element to divide the webpage content -->
+        <div id="notes">
+    
+        </div>
+        <!-- 'password' type will hide the input for password -->
+        <!-- <input type="password"> -->
         <!--tag 'p' stands for paragraph-->
-        <p>This application is created by Uyen Truong</p>
+        <!-- <p class="note">This application is created by Uyen Truong</p>
+        <p class="note">This is the second paragraph</p> -->
+        <button id="create-note">Create Note</button>
+        <!-- Form -->
+        <form id="name-form">
+            <!-- 'name' is an attribute for input specifically in 'form' -->
+            <input type="text" placeholder="First Name" name="firstName">
+            <button>Submit</button>
+        </form>
+        <script src="notes-app.js"></script>
     </body>
 </html>
 <!--Reference website for HTML: https://developer.mozilla.org/en-US/docs/Web/HTML-->
