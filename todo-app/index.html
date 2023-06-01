@@ -5,13 +5,17 @@
     </head>
     <body>
         <h1>ToDo App</h1>
-        <h3 id="summary"></h3>
-        <input id="search-todo" type="text" placeholder="Find todo">
-        <div id="search-result"></div>
         <form id="new-todo-form">
             <input type="text" placeholder="Enter New Todo" name="newTodo">
             <button id="submit-new">Submit</button>
         </form>
+        <h3 id="summary"></h3>
+        <input id="search-todo" type="text" placeholder="Find todo">
+        <div id="search-result"></div>
+        <label>
+            <input type="checkbox" id="hide-completed">Hide Completed
+        </label>
+        
         <script src="todo-app.js"></script>
     </body>
 </html>

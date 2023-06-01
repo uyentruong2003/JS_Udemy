@@ -142,3 +142,10 @@ document.querySelector('#name-form').addEventListener('submit', function (e){
     // clear the previously entered value:
     e.target.elements.firstName.value = ''
 })
+
+// ----------------------------------------------
+// WORKING WITH CHECKBOX
+document.querySelector('#for-fun').addEventListener('change', function (e){
+    // e.target.checked: boolean, show if the box is checked
+    console.log(e.target.checked)
+})
