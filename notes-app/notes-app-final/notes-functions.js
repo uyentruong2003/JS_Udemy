@@ -14,15 +14,31 @@ const getSavedNotes = function (){
 // Generate the DOM structure for a note
 const generateNoteDOM = function (note){
     //create element
-    const p = document.createElement('p')
+    const title = document.createElement('h5')
+    const body = document.createElement('p')
     // create conent for the element
-    if (note.title.length > 0){
-        p.textContent = note.title
+    if (note.title.length > 0 && note.body.length >0){
+        title.textContent = note.title
+        body.textContent = note.body
+    } else if (note.title.length > 0){ // just title, no body
+        title.textContent = note.title
+        body.textContent = 'No Content'
+    } else if (note.body.length > 0){
+        title.textContent = 'Unnamed Note' // just body, no title
+        body.textContent = note.body
     } else {
-        p.textContent = 'Unnamed Note'
+        title.textContent = 'N/A'
+        body.textContent = 'N/A'
+        
     }
     // add to screen
-    document.querySelector('#notes').appendChild(p)
+    document.querySelector('#notes').appendChild(title)
+    document.querySelector('#notes').appendChild(body)
+}
+
+// Save notes:
+const saveNotes = function (notes){
+    localStorage.setItem('notes', JSON.stringify(notes))
 }
 
 // Render the notes:
@@ -32,9 +48,12 @@ const renderNotes = function (notes, filters){
         return note.title.toLowerCase().includes(filters.searchText.toLowerCase())
     })
 
+    // Clear the previous notes list:
+    document.querySelector('#notes').innerHTML = ''
+
     // function to print each note on screen
     filteredNotes.forEach(function (note){
-        // generate DOM & print on screen
+        // generate DOM (create element & assign content)
         generateNoteDOM(note)
     })
 

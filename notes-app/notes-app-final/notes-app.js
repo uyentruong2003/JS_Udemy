@@ -7,6 +7,8 @@ const filters = {
     searchText: ''
 }
 
+renderNotes(notes, filters)
+
 // Add a new note:
 document.querySelector('#add-note-form').addEventListener('submit', function (e){
     e.preventDefault()
@@ -21,7 +23,7 @@ document.querySelector('#add-note-form').addEventListener('submit', function (e)
     e.target.elements.newNoteTitle.value = ''
     e.target.elements.newNoteBody.value = ''
     // Save in storage:
-    localStorage.setItem('notes', JSON.stringify(notes))
+    saveNotes(notes)
     renderNotes(notes,filters)
 
 })
