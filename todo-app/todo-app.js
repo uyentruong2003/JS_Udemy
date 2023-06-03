@@ -1,4 +1,4 @@
-const todos = [{
+let todos = [{
     text: 'Order cat food',
     completed: true
 },{
@@ -15,17 +15,6 @@ const todos = [{
     completed: true
 }]
 
-// get summary:
-const getSummary = function (todos){
-    // filter out the incompleteTodos
-    const incompleteTodos = todos.filter( function (todo) {
-        return !todo.completed
-    })
-    //query the element & add content
-    const summary = document.querySelector('#summary')
-    summary.textContent = `You have ${incompleteTodos.length} todos left:`
-}
-
 // FUNCTION: Sort the array
 const sortTodos = function (todos){
     const sorted = todos.sort(function (a,b){
@@ -39,27 +28,14 @@ const sortTodos = function (todos){
     })
 }
 
-// FUNCTION: Add a p for each todo in array
-const displayTodos = function (todos){
-    // getSummary(todos) // print the summary first
-
-    //clear the search result
-    document.querySelector('#search-result').innerHTML = ''
-    todos.forEach(function(todo){
-        //(1) create element
-        const p = document.createElement('p')
-        //(2) create content
-        p.textContent = todo.text
-        //(3) append to the body tag
-        document.querySelector('#search-result').appendChild(p)
-    })
-}
 
 // OBJECT: Create an object to hold the search text
 const filters = {
     searchText: '',
     hideCompleted: false
 }
+
+
 // FUNCTION: filter & print only the todos that contain the searchtext and/or incomplete
 const renderTodos = function (todos,search){
 
@@ -91,6 +67,12 @@ const renderTodos = function (todos,search){
 }
 
 // OFFICIAL PROGRAM:
+// Read the local storage
+const todosJSON = localStorage.getItem('todos')
+if (todosJSON !== null){
+    todos = JSON.parse(todosJSON)
+}
+
 sortTodos(todos)
 // displayTodos(todos)
 renderTodos(todos)
@@ -112,6 +94,8 @@ document.querySelector('#new-todo-form').addEventListener('submit', function (e)
     //add to the array
     todos.push(newTodo)
     e.target.elements.newTodo.value = '' //clear input
+    //Save an updated todos array to the local storage
+    localStorage.setItem('todos', JSON.stringify(todos))
     // sort the array (so the incomplete todos come first)
     sortTodos(todos)
     // re-display todos

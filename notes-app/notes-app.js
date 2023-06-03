@@ -1,6 +1,6 @@
 // // DOM - DOCUMENT OBJECT MODEL
 // // Manipulate the content of the website in JS file
-const notes = [{
+let notes = [{
     title: 'My next trip',
     body: 'I would like to go to Spain'
 },{
@@ -149,3 +149,43 @@ document.querySelector('#for-fun').addEventListener('change', function (e){
     // e.target.checked: boolean, show if the box is checked
     console.log(e.target.checked)
 })
+
+// ----------------------------------------------
+// WORKING WITH DROPDOWN
+document.querySelector('#filter-by').addEventListener('change', function (e) {
+    console.log(e.target.value)
+})
+
+// // ----------------------------------------------
+// // SAVING DATA IN LOCALSTORAGE (CRUD)
+// // C: CREATE local storage (localStorage.setItem())
+// localStorage.setItem('location', 'Philadelphia')
+// // R: READ local storage (localStorage.getItem())
+// console.log(localStorage.getItem('location'))
+// // U: UPDATE local storage (using setItem as Create)
+// localStorage.setItem('location','Austin')
+// // R: REMOVE local from local storage
+// localStorage.removeItem('location')
+// localStorage.clear() //delete all
+
+// //localStorage only stores STRING; 
+// // if you store an object/array, you have to convert it to string
+
+// const userObj1 = {
+//     name: 'Uyen',
+//     age: 20
+// }
+
+// // use JSON to convert Obj/Arr to String & vice versa
+// // Obj --> String (JSON)
+// const userString1 = JSON.stringify(userObj1)
+// console.log(userString1)
+// localStorage.setItem('user',userString1)
+
+// // String (JSON) --> Obj
+// const userString2 = localStorage.getItem('user')
+// const userObj2 = JSON.parse(userString2)
+// console.log(`${userObj2.name} is ${userObj2.age}`)
+
+
+
