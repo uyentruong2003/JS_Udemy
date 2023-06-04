@@ -14,10 +14,18 @@ const getSavedNotes = function (){
 // Generate the DOM structure for a note
 const generateNoteDOM = function (note){
     //create element
+    const divLine = document.createElement('p')
+    const noteContainer = document.createElement('div')
     const title = document.createElement('h5')
     const body = document.createElement('p')
+    const removeButton = document.createElement('button')
+    
+    // note: for inline text tag, use 'span'
+    removeButton.textContent = 'Remove'
+    divLine.textContent = '---'
+
     // create conent for the element
-    if (note.title.length > 0 && note.body.length >0){
+    if (note.title.length > 0 && note.body.length > 0){
         title.textContent = note.title
         body.textContent = note.body
     } else if (note.title.length > 0){ // just title, no body
@@ -32,8 +40,11 @@ const generateNoteDOM = function (note){
         
     }
     // add to screen
-    document.querySelector('#notes').appendChild(title)
-    document.querySelector('#notes').appendChild(body)
+    noteContainer.appendChild(title)
+    noteContainer.appendChild(body)
+    noteContainer.appendChild(removeButton)
+    noteContainer.appendChild(divLine)
+    document.querySelector('#notes').appendChild(noteContainer)
 }
 
 // Save notes:

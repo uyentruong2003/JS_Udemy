@@ -11,6 +11,8 @@ let todos = getSavedTodos()
 sortTodos(todos)
 renderTodos(todos, filters)
 
+// debugger //breakpoint to debug
+
 //Search Handling:
 document.querySelector('#search-todo').addEventListener('input', function (e){
     filters.searchText = e.target.value

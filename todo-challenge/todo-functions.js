@@ -45,9 +45,25 @@ const generateTodoDOM = function (filteredTodos){
     document.querySelector('#search-result').innerHTML = ''
     // Print on screen the filtered result:
     filteredTodos.forEach(function (todo){
-        const p = document.createElement('p')
-        p.textContent = todo.text
-        document.querySelector('#search-result').appendChild(p)
+        // each todo container
+        const container = document.createElement('div')
+        // each todo remove button
+        const removeBotton = document.createElement('button')
+        removeBotton.textContent = 'x'
+        //each todo checkbox
+        const completeCheckbox = document.createElement('input')
+        completeCheckbox.setAttribute('type','checkbox')
+        //each todo content
+        const content = document.createElement('span')
+        content.textContent = todo.text
+        document.querySelector('#search-result').appendChild(content)
+
+        //add to container
+        container.appendChild(removeBotton)
+        container.appendChild(content)
+        container.appendChild(completeCheckbox)
+        document.querySelector('#search-result').appendChild(container)
+        
     })
 }
 
