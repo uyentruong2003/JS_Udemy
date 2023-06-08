@@ -14,6 +14,7 @@ document.querySelector('#add-note-form').addEventListener('submit', function (e)
     e.preventDefault()
     // put the new input values to an object
     let newNote = {
+        id: uuidv4(),
         title: e.target.elements.newNoteTitle.value,
         body: e.target.elements.newNoteBody.value
     }
@@ -26,4 +27,16 @@ document.querySelector('#add-note-form').addEventListener('submit', function (e)
     saveNotes(notes)
     renderNotes(notes,filters)
 
+})
+
+// Create note button to re-direct to a new page for input:
+document.querySelector('#create-note').addEventListener('click', function (e){
+    let newNote = {
+        id: uuidv4(),
+        title: '',
+        body:''
+    }
+    notes.push(newNote)
+    saveNotes(notes)
+    location.assign(`/JS_Udemy/notes-app/notes-app-final/edit.html#${newNote.id}`)
 })

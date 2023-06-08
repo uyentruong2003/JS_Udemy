@@ -48,23 +48,55 @@ const generateTodoDOM = function (filteredTodos){
         // each todo container
         const container = document.createElement('div')
         // each todo remove button
-        const removeBotton = document.createElement('button')
-        removeBotton.textContent = 'x'
+        const removeButton = document.createElement('button')
+        removeButton.textContent = 'x'
+        removeButton.addEventListener('click', function(){
+            removeTodo(todo.id)
+            saveTodos(todos)
+            renderTodos(todos,filters)
+        })
         //each todo checkbox
         const completeCheckbox = document.createElement('input')
         completeCheckbox.setAttribute('type','checkbox')
+        // auto check the box if it is completed
+        completeCheckbox.checked = todo.completed
+        completeCheckbox.addEventListener('change', function(e){
+            manipulateCheckTodos (todo.id)
+            renderTodos(todos, filters)
+            saveTodos(todos)
+        })
+        
+        
         //each todo content
         const content = document.createElement('span')
         content.textContent = todo.text
         document.querySelector('#search-result').appendChild(content)
 
         //add to container
-        container.appendChild(removeBotton)
+        container.appendChild(removeButton)
         container.appendChild(content)
         container.appendChild(completeCheckbox)
         document.querySelector('#search-result').appendChild(container)
         
     })
+}
+
+// modify the complete property:
+const manipulateCheckTodos = function (id){
+    const todo = todos.find(function(todo){
+        return todo.id === id
+    })
+    if (todo != undefined){
+        todo.completed = !todo.completed
+    }
+}
+
+// remove a todo from the list:
+const removeTodo = function (id){
+    const todoIndex = todos.findIndex(function(todo){
+        return todo.id === id
+    })
+    if (todoIndex > -1) todos.splice(todoIndex,1)
 }
 
 // renderTodos: filter & print only the todos that contain the searchtext and/or incomplete

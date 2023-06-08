@@ -16,15 +16,22 @@ const generateNoteDOM = function (note){
     //create element
     const divLine = document.createElement('p')
     const noteContainer = document.createElement('div')
-    const title = document.createElement('h5')
+    const title = document.createElement('a')
     const body = document.createElement('p')
     const removeButton = document.createElement('button')
-    
     // note: for inline text tag, use 'span'
-    removeButton.textContent = 'Remove'
+
     divLine.textContent = '---'
 
-    // create conent for the element
+    //Setup the remove note button
+    removeButton.textContent = 'Remove'
+    removeButton.addEventListener('click', function (){
+        removeNote(note.id)
+        saveNotes(notes)
+        renderNotes(notes, filters)
+    })
+
+    // create conent for the elements title & body
     if (note.title.length > 0 && note.body.length > 0){
         title.textContent = note.title
         body.textContent = note.body
@@ -35,16 +42,28 @@ const generateNoteDOM = function (note){
         title.textContent = 'Unnamed Note' // just body, no title
         body.textContent = note.body
     } else {
-        title.textContent = 'N/A'
-        body.textContent = 'N/A'
+        title.textContent = 'Unnamed Note'
+        body.textContent = 'No content'
         
     }
+    title.setAttribute('href',`/JS_Udemy/notes-app/notes-app-final/edit.html#${note.id}`) //the hash has the id of the specific note
     // add to screen
     noteContainer.appendChild(title)
     noteContainer.appendChild(body)
     noteContainer.appendChild(removeButton)
     noteContainer.appendChild(divLine)
     document.querySelector('#notes').appendChild(noteContainer)
+}
+
+// Remove a note from the list:
+const removeNote = function (id){
+    //return the index of the note you wanna delete
+    const noteIndex = notes.findIndex(function (note){
+        return note.id === id
+    })
+    if (noteIndex > -1) {
+        notes.splice(noteIndex, 1)
+    }
 }
 
 // Save notes:

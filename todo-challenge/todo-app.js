@@ -24,9 +24,11 @@ document.querySelector('#new-todo-form').addEventListener('submit', function (e)
     e.preventDefault() //clear default reaction
     //create an object for the new todo
     let newTodo = {
+        id: uuidv4(),
         text: e.target.elements.newTodo.value,
         completed: false
     }
+    console.log(newTodo)
     //add to the array
     todos.push(newTodo)
     e.target.elements.newTodo.value = '' //clear input
