@@ -15,9 +15,12 @@
         <button id="create-note">Create Note</button>
         <h2 id="note-summary"></h2>
         <input id="search-note" type="text" placeholder="Filter Notes">
-        <div id="notes">
-
-        </div>
+        <select id="sort-by">
+            <option value="byEdited">Sort by last edited</option>
+            <option value="byCreated">Sort by recently created</option>
+            <option value="alphabetical">Sort alphabetically</option>
+        </select>
+        <div id="notes"></div>
         <script src="notes-functions.js"></script>
         <script src="notes-app.js"></script>
         <!-- Add a third-party library for UUID -->

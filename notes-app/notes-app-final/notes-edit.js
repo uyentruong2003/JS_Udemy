@@ -1,6 +1,6 @@
 const noteId = location.hash.substring(1) //exclude the hash
-const notes = getSavedNotes()
-const note = notes.find(function (note){
+let notes = getSavedNotes()
+let note = notes.find(function (note){
     return note.id === noteId
 })
 
@@ -29,4 +29,24 @@ document.querySelector('#remove-note').addEventListener('click', function(e){
     removeNote(note.id)
     saveNotes(notes)
     location.assign("/JS_Udemy/notes-app/notes-app-final/index.html")
+})
+
+// Syncing across pages:
+window.addEventListener('storage', function (e){ // when the storage is changed
+    if (e.key === 'notes'){
+        notes = JSON.parse(e.newValue) //update with the latest data
+        //find the note from the list
+        note = notes.find(function (note){
+            return note.id === noteId
+        })
+        
+        //if not exist, re-direct to Home
+        if (note === undefined) {
+            location.assign("/JS_Udemy/notes-app/notes-app-final/index.html")
+        }
+        // if exists, re-assign the note title & body
+        noteTitle.value = note.title
+        noteBody.value = note.body
+        
+    }
 })

@@ -94,3 +94,16 @@ const renderSummary = function (notes){
     const noteSum = document.querySelector('#note-summary')
     noteSum.textContent = `You have ${notes.length} notes in total`
 }
+
+// Sort notes alphabetically:
+const sortAlphabetically = function (notes){
+    notes.sort(function (a,b){
+        if (a.title<b.title) {
+            return -1
+        } else if (a.title>b.title){
+            return 1
+        } else{
+            return 0
+        }
+    })
+}
