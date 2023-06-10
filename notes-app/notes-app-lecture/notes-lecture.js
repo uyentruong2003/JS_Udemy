@@ -187,5 +187,35 @@ document.querySelector('#filter-by').addEventListener('change', function (e) {
 // const userObj2 = JSON.parse(userString2)
 // console.log(`${userObj2.name} is ${userObj2.age}`)
 
+// ----------------------------------------------
+// JS DATES
 
+const date1 = new Date('May 10th 2023 12:00:00')
+const date2 = new Date('March 15th 2023')
+
+// Unix Epoch: representing date & time with numbers
+const timestamp1 = date1.getTime()
+const timestamp2 = date2.getTime()
+
+// Compare the 2 and print the one that go first
+if (timestamp1 <= timestamp2){
+    console.log(date1.toString())
+} else {
+    console.log(date2.toString())
+} 
+
+// console.log(`Year: ${now.getFullYear()}`)
+// console.log(`Month: ${now.getMonth()}`) //Jan is 0, Feb is 1, etc.
+// console.log(`Day of the Month: ${now.getDate()}`)
+// console.log(`Hour: ${now.getHours()}`)
+// console.log(`Minute: ${now.getMinutes()}`)
+// console.log(`Second: ${now.getSeconds()}`)
+
+// ----------------------------------------------
+// MOMENT JS LIBRARY
+const now = moment()
+console.log(now.toString())
+now.minute(1) //set the minute
+console.log(now.toString())
+console.log(now.minute().toString()) //get the minute
 

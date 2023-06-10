@@ -21,9 +21,14 @@
             <option value="alphabetical">Sort alphabetically</option>
         </select>
         <div id="notes"></div>
-        <script src="notes-functions.js"></script>
-        <script src="notes-app.js"></script>
+        <!-- Add a third-party library for time -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"></script>
+        <script>
+            moment().format()
+        </script>
         <!-- Add a third-party library for UUID -->
         <script src="uuidv4.js"></script>
+        <script src="notes-functions.js"></script>
+        <script src="notes-app.js"></script>
     </body>
 </html>

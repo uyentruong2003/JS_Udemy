@@ -57,14 +57,28 @@ document.querySelector('#sort-by').addEventListener('change', function(e){
     renderNotes(notes, filters)
 })
 
-// JS Dates:
-// Unix Epoch: representing date & time with numbers
-const now = new Date('January 21 2001 6:25:01')
-console.log(now.getTime()) // return Unix Epoch timestamp
+const now = moment()
+console.log(now.toString())
+now.minute(1) //set the minute
+console.log(now.toString())
+console.log(now.minute().toString()) //get the minute
+now.add(1,'year').subtract(20, 'days') //add 1 year, subtract 20 days to the date
+console.log(now.toString())
+// Show in format as such: November 3rd, 2003
+console.log(now.format('MMMM Do, YYYY'))
+console.log(now.fromNow())
 
-// console.log(`Year: ${now.getFullYear()}`)
-// console.log(`Month: ${now.getMonth()}`) //Jan is 0, Feb is 1, etc.
-// console.log(`Day of the Month: ${now.getDate()}`)
-// console.log(`Hour: ${now.getHours()}`)
-// console.log(`Minute: ${now.getMinutes()}`)
-// console.log(`Second: ${now.getSeconds()}`)
+//from date to unix epoch timestamp
+const nowTimestamp = now.valueOf()
+console.log(nowTimestamp)
+
+//from unix epoch timestamp to date
+console.log(moment(nowTimestamp).toString())
+
+// Challenge:
+const birthday = moment()
+birthday.month(2) //Mar is 2 because Jan is 0
+birthday.date(15)
+birthday.year(2003)
+
+console.log(birthday.format('MMMM D, YYYY'))
