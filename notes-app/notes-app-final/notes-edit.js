@@ -10,18 +10,24 @@ if (note === undefined) {
 
 let noteTitle = document.querySelector('#note-title')
 let noteBody = document.querySelector('#note-body')
+let lastEdit = document.querySelector('#last-edited')
 
 //get the current inputs for title & body:
 noteTitle.value = note.title
 noteBody.value = note.body
+lastEdit.textContent = `    Last edited ${moment(note.updatedAt).fromNow()}`
 
 //save the change:
 noteTitle.addEventListener('input', function(e){
     note.title = e.target.value
+    note.updatedAt = moment().valueOf()
+    lastEdit.textContent = `    Last edited ${moment(note.updatedAt).fromNow()}`
     saveNotes(notes)
 })
 noteBody.addEventListener('input', function(e){
     note.body = e.target.value
+    note.updatedAt = moment().valueOf()
+    lastEdit.textContent = `    Last edited ${moment(note.updatedAt).fromNow()}`
     saveNotes(notes)
 })
 // remove note button:
@@ -47,6 +53,9 @@ window.addEventListener('storage', function (e){ // when the storage is changed
         // if exists, re-assign the note title & body
         noteTitle.value = note.title
         noteBody.value = note.body
+        lastEdit.textContent = `    Last edited ${moment(note.updatedAt).fromNow()}`
         
     }
 })
+
+

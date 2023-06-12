@@ -19,6 +19,7 @@ const generateNoteDOM = function (note){
     const title = document.createElement('a')
     const body = document.createElement('p')
     const removeButton = document.createElement('button')
+    const lastEdit = document.createElement('span')
     // note: for inline text tag, use 'span'
 
     divLine.textContent = '---'
@@ -47,8 +48,13 @@ const generateNoteDOM = function (note){
         
     }
     title.setAttribute('href',`/JS_Udemy/notes-app/notes-app-final/edit.html#${note.id}`) //the hash has the id of the specific note
+    
+    // set up the last edit info:
+    lastEdit.textContent = `    Last edited ${moment(note.updatedAt).fromNow()}`
+    
     // add to screen
     noteContainer.appendChild(title)
+    noteContainer.appendChild(lastEdit)
     noteContainer.appendChild(body)
     noteContainer.appendChild(removeButton)
     noteContainer.appendChild(divLine)
@@ -101,6 +107,32 @@ const sortAlphabetically = function (notes){
         if (a.title<b.title) {
             return -1
         } else if (a.title>b.title){
+            return 1
+        } else{
+            return 0
+        }
+    })
+}
+
+// Sort by Created:
+const sortByCreated = function (notes){
+    notes.sort(function (a,b){
+        if (a.createdAt > b.createdAt){
+            return -1
+        } else if (a.createdAt < b.createdAt){
+            return 1
+        } else{
+            return 0
+        }
+    })
+}
+
+// Sort by Updated:
+const sortByUpdated = function (notes){
+    notes.sort(function (a,b){
+        if (a.updatedAt > b.updatedAt){
+            return -1
+        } else if (a.updatedAt < b.updatedAt){
             return 1
         } else{
             return 0

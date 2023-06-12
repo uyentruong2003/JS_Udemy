@@ -213,9 +213,35 @@ if (timestamp1 <= timestamp2){
 
 // ----------------------------------------------
 // MOMENT JS LIBRARY
+const example = moment()
+console.log(example.toString())
+example.minute(1) //set the minute
+console.log(example.toString())
+console.log(example.minute().toString()) //get the minute
+
 const now = moment()
 console.log(now.toString())
 now.minute(1) //set the minute
 console.log(now.toString())
 console.log(now.minute().toString()) //get the minute
+now.add(1,'year').subtract(20, 'days') //add 1 year, subtract 20 days to the date
+console.log(now.toString())
+// Show in format as such: November 3rd, 2003
+console.log(now.format('MMMM Do, YYYY'))
+console.log(now.fromNow())
+
+//from date to unix epoch timestamp
+const nowTimestamp = now.valueOf()
+console.log(nowTimestamp)
+
+//from unix epoch timestamp to date
+console.log(moment(nowTimestamp).toString())
+
+// Challenge:
+const birthday = moment()
+birthday.month(2) //Mar is 2 because Jan is 0
+birthday.date(15)
+birthday.year(2003)
+
+console.log(birthday.format('MMMM D, YYYY'))
 

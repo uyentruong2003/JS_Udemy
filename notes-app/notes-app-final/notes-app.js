@@ -10,13 +10,17 @@ const filters = {
 renderNotes(notes, filters)
 
 // Add a new note:
+// timestamp:
+const timestamp = moment()
 document.querySelector('#add-note-form').addEventListener('submit', function (e){
     e.preventDefault()
     // put the new input values to an object
     let newNote = {
         id: uuidv4(),
         title: e.target.elements.newNoteTitle.value,
-        body: e.target.elements.newNoteBody.value
+        body: e.target.elements.newNoteBody.value,
+        createdAt: timestamp,
+        updatedAt: timestamp
     }
     // add to array
     notes.push(newNote)
@@ -34,7 +38,9 @@ document.querySelector('#create-note').addEventListener('click', function (e){
     let newNote = {
         id: uuidv4(),
         title: '',
-        body:''
+        body:'',
+        createdAt: timestamp,
+        updatedAt: timestamp
     }
     notes.push(newNote)
     saveNotes(notes)
@@ -57,28 +63,3 @@ document.querySelector('#sort-by').addEventListener('change', function(e){
     renderNotes(notes, filters)
 })
 
-const now = moment()
-console.log(now.toString())
-now.minute(1) //set the minute
-console.log(now.toString())
-console.log(now.minute().toString()) //get the minute
-now.add(1,'year').subtract(20, 'days') //add 1 year, subtract 20 days to the date
-console.log(now.toString())
-// Show in format as such: November 3rd, 2003
-console.log(now.format('MMMM Do, YYYY'))
-console.log(now.fromNow())
-
-//from date to unix epoch timestamp
-const nowTimestamp = now.valueOf()
-console.log(nowTimestamp)
-
-//from unix epoch timestamp to date
-console.log(moment(nowTimestamp).toString())
-
-// Challenge:
-const birthday = moment()
-birthday.month(2) //Mar is 2 because Jan is 0
-birthday.date(15)
-birthday.year(2003)
-
-console.log(birthday.format('MMMM D, YYYY'))
