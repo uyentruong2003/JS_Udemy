@@ -35,3 +35,51 @@ const teacher = new Person('Andrew', 'Mead', 27, ['Teaching', 'Biking'])
 console.log(teacher.getBio())
 console.log(teacher.location)
 console.log(teacher.setName('Andrew Mead'))
+
+// changes to the instance prototype will not be reflected in other instances
+me.getBio = function (){
+    return "Only affects me instance"
+}
+console.log(me.getBio())
+console.log(teacher.getBio())
+
+
+// changes to the prototype will be reflected in any calls after
+Person.prototype.getBio = function (){
+    return "Testing testing"
+}
+console.log(teacher.getBio())
+
+// ----------------------------------------------
+// PROTOTYPAL INHERITANCE
+//Prototype chain for OBJECTS: object --> Obj.prototype --> null
+const myProduct = {
+    name: 'Influence'
+}
+
+// Overwriting/creating new method
+Object.prototype.someNewMethod = () => 'This is the new function'
+//hasOwnProperty:
+console.log(myProduct.hasOwnProperty('hasOwnProperty'))
+console.log(myProduct)
+console.log(myProduct.someNewMethod())
+
+// Another way to create an object
+const item = new Object() [{
+    name: 'The War of Art'
+}]
+
+// Primitive value: doesn't have properties, non-object values; This includes: string, number, boolean, null, undefined
+// Prototype chain for ARRAYS: array --> Array.prototype --> Object.prototype --> null
+const myTeam = ['Luke', 'Madison']
+console.log(myTeam.hasOwnProperty('filter'))
+
+// Prototype chain for FUNCTIONS: function --> Function.prototype --> Object.prototype --> null
+const getScore = () => 1
+console.log(getScore)
+
+// Prototype chain for STRING: string --> String.prototype --> Object.prototype --> null
+// Prototype chain for NUMBER: number --> Number.prototype --> Object.prototype --> null
+// Prototype chain for BOOL: boolean --> Boolean.protype --> Object.prototype --> null
+const otherProduct = 'Computer'
+console.log(otherProduct)
