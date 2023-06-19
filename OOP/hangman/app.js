@@ -8,7 +8,7 @@ const puzzleEl = document.querySelector('#display-puzzle')
 const guessesEl = document.querySelector('#display-guesses')
 
 puzzleEl.textContent = game1.getPuzzle()
-guessesEl.textContent = game1.remainingGuesses
+guessesEl.textContent = game1.displayMessage()
 
 // get the user input for guess letter
 window.addEventListener('keypress', function (e) {
@@ -17,7 +17,6 @@ window.addEventListener('keypress', function (e) {
     // print on screen the puzzle and remaining guesses
     const puzzle = game1.getPuzzle()
     puzzleEl.textContent = puzzle
-    guessesEl.textContent = game1.remainingGuesses
-    game1.setStatus(puzzle)
-    console.log(game1.status)
+    guessesEl.textContent = game1.displayMessage()
+    
 })

@@ -1,3 +1,28 @@
+// Class: is a different way to structure the codes relating to and object
+class PersonClass {
+    constructor (firstName, lastName, age, likes = []) {
+        this.firstName = firstName
+        this.lastName = lastName
+        this.age = age
+        this.likes = likes
+    }
+    getBio() {
+        let bio = `${this.firstName} is ${this.age}.`
+        this.likes.forEach((like) => { //must use arrow function in order to access this.firstName
+            bio += ` ${this.firstName} likes ${like}.`
+        })
+        return bio
+    }
+    setName (fullName) {
+        const names = fullName.split(' ')
+        this.firstName = names[0]
+        this.lastName = names[1]
+        return names
+    }
+}
+const myPerson = new PersonClass('Uyen','Truong',20, ['interning'])
+console.log(myPerson)
+console.log(myPerson.getBio())
 // Constructor function- initialize an obj
 const Person = function (firstName, lastName, age, likes = []){
     this.firstName = firstName
