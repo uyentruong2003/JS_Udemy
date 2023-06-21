@@ -23,6 +23,48 @@ class PersonClass {
 const myPerson = new PersonClass('Uyen','Truong',20, ['interning'])
 console.log(myPerson)
 console.log(myPerson.getBio())
+
+// SUBCLASS: a class derived from another class
+class Employee extends PersonClass {
+    // new version of person
+    constructor(firstName, lastName, age, position, likes){
+        //get these from the PersonClass
+        super(firstName, lastName, age, likes)
+        this.position = position
+    }
+    getBio (){
+        return `${this.firstName} ${this.lastName} is a ${this.position}`
+    }
+    getYearsLeft () {
+        return 65 - this.age
+    }
+}
+const myEmployee = new Employee('Uyen','Truong',20, 'Intern', ['kpop dancing'])
+console.log(myEmployee)
+console.log(myEmployee.getBio())
+console.log(myEmployee.getYearsLeft())
+
+// Challenge: create a subclass:
+class Student extends PersonClass {
+    constructor(firstName, lastName, age, grade) {
+        super (firstName, lastName, age)
+        this.grade = grade
+    }
+    updateGrade(change){
+        this.grade += change
+    }
+   
+    getBio (){
+        const status = this.grade >= 70 ? 'passing':'failing'
+        return `${this.firstName} is ${status} the class`
+    }    
+}
+const myStudent = new Student ('Uyen','Truong', 20, 90)
+console.log(myStudent.getBio())
+myStudent.updateGrade(-30)
+console.log(myStudent.getBio())
+
+// WITHOUT USING CLASS:
 // Constructor function- initialize an obj
 const Person = function (firstName, lastName, age, likes = []){
     this.firstName = firstName
@@ -108,3 +150,22 @@ console.log(getScore)
 // Prototype chain for BOOL: boolean --> Boolean.protype --> Object.prototype --> null
 const otherProduct = 'Computer'
 console.log(otherProduct)
+
+// ----------------------------------------------
+// GETTERS & SETTERS
+const data = {
+    locations: [],
+    // getter:
+    get location() {
+        return this._location
+    },
+    // setter"
+    set location(value) {
+        this._location = value.trim()
+        this.locations.push(this._location)
+    }
+}
+
+data.location = ' NYC'
+data.location = ' Tuscaloosa'
+console.log(data)
