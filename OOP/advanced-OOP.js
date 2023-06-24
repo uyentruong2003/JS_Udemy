@@ -13,15 +13,20 @@ class PersonClass {
         })
         return bio
     }
-    setName (fullName) {
+    //SETTER:
+    set fullName (fullName) {
         const names = fullName.split(' ')
         this.firstName = names[0]
         this.lastName = names[1]
-        return names
+    }
+    //GETTER:
+    get fullName(){
+        return `${this.firstName} ${this.lastName}`
     }
 }
-const myPerson = new PersonClass('Uyen','Truong',20, ['interning'])
+const myPerson = new PersonClass('Andrew','Mead',20, ['interning'])
 console.log(myPerson)
+myPerson.fullName = 'Uyen Truong' //change fullName
 console.log(myPerson.getBio())
 
 // SUBCLASS: a class derived from another class
@@ -33,7 +38,7 @@ class Employee extends PersonClass {
         this.position = position
     }
     getBio (){
-        return `${this.firstName} ${this.lastName} is a ${this.position}`
+        return `${this.fullName} is a ${this.position}`
     }
     getYearsLeft () {
         return 65 - this.age
@@ -97,7 +102,7 @@ Person.prototype.setName = function (fullName) {
 const me = new Person('Uyen','Truong', 20, ['Pilates', 'Yoga']) //initialize an obj
 console.log(me.getBio())
 console.log(me.location)
-console.log(me.setName('Uyen Truong'))
+me.setName('Uyen Truong')
 const teacher = new Person('Andrew', 'Mead', 27, ['Teaching', 'Biking'])
 console.log(teacher.getBio())
 console.log(teacher.location)
@@ -169,3 +174,63 @@ const data = {
 data.location = ' NYC'
 data.location = ' Tuscaloosa'
 console.log(data)
+
+// ----------------------------------------------
+// HTTP- HYPERTEXT TRANSFER PROTOCOL REQUEST
+    // Request: What we want to do
+    // Response: What was actually done
+
+// Initialize the request:
+const request = new XMLHttpRequest()
+
+request.open('GET','http://puzzle.mead.io/puzzle')
+request.send()
+
+// Event listener to add event when the the request is done (response is received)
+request.addEventListener('readystatechange',(e) =>{
+    //readyState: check which state the HTTP operation on request is at; 4 is done
+    if(e.target.readyState === 4 && e.target.status === 200){
+        const data = JSON.parse(e.target.responseText)
+        console.log(data)
+    } else if (e.target.readyState === 4){
+        console.log("An error has occurred")
+    }
+})
+
+// ----------------------------------------------
+// HTTP ERRORS & MESSAGE READING
+// Status code: let you know if the HTTP request is a success/failure
+// use e.target.status --> check for the status code
+//200: success
+// Query: add after the url this: ?key=value (key is the criteria, value is your desired value for that criteria)
+// e.g., URL is http://puzzle.mead.io/puzzle --> query only the hangman phrase with wordcount 2: http://puzzle.mead.io/puzzle?wordCount=2
+// Check for status code errors: httpstatuses.com (common status codes are in 2xx=success and 4xx-errors range)
+// A resource that helps to understand http message: mdn http message
+    //start-line: type of request (REQUEST MESSAGE)/ status code (RESPONSE MESSAGE) and the protocol version
+    // header: general data of the browser, who the request/response is from, date, etc.
+    // blank space separating header & body
+    // body: what is requested
+
+// Challenge:
+// 1. Make a new request for all countries
+// 2. Parse the responseText to get back the array of objects
+// 3. Find your country obj by its country code (alpha2Code property)
+// 4. Print the full country name (name property)
+
+const countryRequest = new XMLHttpRequest()
+countryRequest.open('GET','http://restcountries.com/v3.1/all')
+countryRequest.send()
+
+// using the queried data:
+const countryCode = 'VN'
+countryRequest.addEventListener('readystatechange', (e) => {
+    //if successful fetching:
+    if (e.target.readyState === 4 && e.target.status === 200){
+        const data = JSON.parse(e.target.responseText)
+        //find the country with code VN
+        const myCountry = data.find((country)=> {return country.alpha2Code === countryCode})
+        console.log(myCountry.name)
+    }  else if (e.target.readyState === 4){
+        console.log("An error has occurred")
+    }
+})
