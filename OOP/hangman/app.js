@@ -21,7 +21,7 @@ window.addEventListener('keypress', (e) => {
     
 })
 // ----------------------------------------------
-// CALLBACK FUNCTION
+// CALLBACK FUNCTION: pass this function into the function getPuzzle in requests.js
 getPuzzle((error,puzzle)=>{
     if (error){
         console.log(`Error: ${error}`)
@@ -29,3 +29,11 @@ getPuzzle((error,puzzle)=>{
         console.log(puzzle)
     }
 })
+
+// // ----------------------------------------------
+// // ASYNCHRONOUS VS. SYNCHRONOUS EXECUTION
+// // Asynchronous: the next steps will still be executed even though the request hasn't been done processing
+// // Synchronous: the next, unrelated steps will not be executed until the request is done
+// const puzzle = getPuzzleSync()
+// console.log(puzzle)
+// console.log('Do sth Else')
