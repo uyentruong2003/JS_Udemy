@@ -1,10 +1,12 @@
+'use strict' //help with debugging
 // Read existing notes from local storage
 let notes = getSavedNotes()
 
 // An Object that holds filters
 const filters = {
     // filter by search
-    searchText: ''
+    searchText: '',
+    sortBy: 'unsorted'
 }
 
 renderNotes(notes, filters)
@@ -55,11 +57,14 @@ window.addEventListener('storage', function(e){
     }
 })
 
+// Filter with search:
+document.querySelector('#search-note').addEventListener('input', (e)=>{
+    filters.searchText = e.target.value
+    renderNotes(notes, filters)
+})
 // Working with drop down:
 document.querySelector('#sort-by').addEventListener('change', function(e){
-    if (e.target.value === 'alphabetical'){
-        sortAlphabetically(notes)
-    }
+    filters.sortBy = e.target.value
     renderNotes(notes, filters)
 })
 

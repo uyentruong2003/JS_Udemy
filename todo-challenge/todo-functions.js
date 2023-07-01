@@ -1,3 +1,5 @@
+'use strict' //help with debugging
+
 // sortTodos: Sort the array
 const sortTodos = function (todos){
     const sorted = todos.sort(function (a,b){
@@ -113,11 +115,12 @@ const renderTodos = function (todos,filters){
 const getSavedTodos = function (){
     // Read the local storage
     const todosJSON = localStorage.getItem('todos')
-    if (todosJSON !== null){
-        return JSON.parse(todosJSON)
-    } else {
+    try {
+        return todosJSON !== null ? JSON.parse(todosJSON) : []
+    } catch (e){
         return []
     }
+    
 }
 
 // saveTodos: store updated todos list to local storage

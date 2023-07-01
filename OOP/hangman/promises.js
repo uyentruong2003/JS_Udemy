@@ -18,13 +18,18 @@ getDataCallback((error,data)=>{
 // Using Promise instead:
 // resolve: if everything went well
 // reject: if everything went bad
-const myPromise = new Promise((resolve, reject)=>{
-    setTimeout(()=>{
-        //impossible to have 2 resolve/reject line!!!
-        // resolve('this is the promise data')
-        reject('this is the promise error')
-    },2000)
-})
+
+// Promise: a shorter way in replacement for callback function to do
+// asynchronous programming
+const getDataPromise= (data) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(()=>{
+            resolve(`This is my success data: ${data}`)
+            // reject('this is the promise error')
+        },2000)    
+    })
+}
+const myPromise = getDataPromise(123)
 
 // this function below will be run when it is 'RESOLVE'
 myPromise.then((data) => {
@@ -33,3 +38,4 @@ myPromise.then((data) => {
 }, (error) =>{
     console.log(error)
 })
+

@@ -1,18 +1,23 @@
+'use strict' //help with debugging
+
+console.log(data) //data is leaked and accidentally become a global var
 // Read existing notes from local storage:
-const getSavedNotes = function (){
+const getSavedNotes = () => {
     //get JSON notes from local storage
     const notesJSON = localStorage.getItem('notes')
-    // If not null, convert JSON back to array & return. 
+    // try-catch used just in case the file in local storage is not JSON
+    try {
+    // Check if not null, convert JSON back to array & return. 
     // Else, return empty array
-    if (notesJSON !== null){
-        return JSON.parse(notesJSON)
-    } else{
+    return notesJSON !== null ? JSON.parse(notesJSON) : []
+    } catch(e){
         return []
     }
+    
 }
 
 // Generate the DOM structure for a note
-const generateNoteDOM = function (note){
+const generateNoteDOM = (note) => {
     //create element
     const divLine = document.createElement('p')
     const noteContainer = document.createElement('div')
@@ -26,7 +31,7 @@ const generateNoteDOM = function (note){
 
     //Setup the remove note button
     removeButton.textContent = 'Remove'
-    removeButton.addEventListener('click', function (){
+    removeButton.addEventListener('click', ()=>{
         removeNote(note.id)
         saveNotes(notes)
         renderNotes(notes, filters)
@@ -62,25 +67,25 @@ const generateNoteDOM = function (note){
 }
 
 // Remove a note from the list:
-const removeNote = function (id){
+const removeNote = (id) => {
     //return the index of the note you wanna delete
-    const noteIndex = notes.findIndex(function (note){
-        return note.id === id
-    })
+    const noteIndex = notes.findIndex((note)=> note.id === id)
     if (noteIndex > -1) {
         notes.splice(noteIndex, 1)
     }
 }
 
 // Save notes:
-const saveNotes = function (notes){
+const saveNotes = (notes) => {
     localStorage.setItem('notes', JSON.stringify(notes))
 }
 
 // Render the notes:
-const renderNotes = function (notes, filters){
+const renderNotes = (notes, filters) => {
+    // sort notes first:
+    sortNotes (filters.sortBy, notes)
     // function to filter notes by search
-    const filteredNotes = notes.filter(function (note){
+    const filteredNotes = notes.filter((note) =>{
         return note.title.toLowerCase().includes(filters.searchText.toLowerCase())
     })
 
@@ -88,7 +93,7 @@ const renderNotes = function (notes, filters){
     document.querySelector('#notes').innerHTML = ''
 
     // function to print each note on screen
-    filteredNotes.forEach(function (note){
+    filteredNotes.forEach((note) => {
         // generate DOM (create element & assign content)
         generateNoteDOM(note)
     })
@@ -96,14 +101,14 @@ const renderNotes = function (notes, filters){
 }
 
 // Render note summary:
-const renderSummary = function (notes){
+const renderSummary = (notes) => {
     const noteSum = document.querySelector('#note-summary')
     noteSum.textContent = `You have ${notes.length} notes in total`
 }
 
 // Sort notes alphabetically:
-const sortAlphabetically = function (notes){
-    notes.sort(function (a,b){
+const sortAlphabetically = (notes) => {
+    notes.sort((a,b) => {
         if (a.title<b.title) {
             return -1
         } else if (a.title>b.title){
@@ -115,8 +120,8 @@ const sortAlphabetically = function (notes){
 }
 
 // Sort by Created:
-const sortByCreated = function (notes){
-    notes.sort(function (a,b){
+const sortByCreated = (notes) => {
+    notes.sort((a,b) => {
         if (a.createdAt > b.createdAt){
             return -1
         } else if (a.createdAt < b.createdAt){
@@ -128,8 +133,8 @@ const sortByCreated = function (notes){
 }
 
 // Sort by Updated:
-const sortByUpdated = function (notes){
-    notes.sort(function (a,b){
+const sortByEdited = (notes) => {
+    notes.sort((a,b) => {
         if (a.updatedAt > b.updatedAt){
             return -1
         } else if (a.updatedAt < b.updatedAt){
@@ -138,4 +143,17 @@ const sortByUpdated = function (notes){
             return 0
         }
     })
+}
+
+// sort notes by 3 ways:
+const sortNotes = (option, notes) => {
+    if (option === 'byEdited'){
+        sortByEdited(notes)
+    } else if (option === 'byCreated'){
+        sortByCreated(notes)
+    } else if (option === 'alphabetical'){
+        sortAlphabetically(notes)
+    } else {
+        notes = notes
+    }
 }

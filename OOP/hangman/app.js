@@ -21,14 +21,14 @@ window.addEventListener('keypress', (e) => {
     
 })
 // ----------------------------------------------
-// CALLBACK FUNCTION: pass this function into the function getPuzzle in requests.js
-getPuzzle((error,puzzle)=>{
-    if (error){
-        console.log(`Error: ${error}`)
-    } else{
-        console.log(puzzle)
-    }
-})
+// // CALLBACK FUNCTION: pass this function into the function getPuzzle in requests.js
+// getPuzzle("2",(error,puzzle)=>{
+//     if (error){
+//         console.log(`Error: ${error}`)
+//     } else{
+//         console.log(puzzle)
+//     }
+// })
 
 // // ----------------------------------------------
 // // ASYNCHRONOUS VS. SYNCHRONOUS EXECUTION
@@ -37,3 +37,11 @@ getPuzzle((error,puzzle)=>{
 // const puzzle = getPuzzleSync()
 // console.log(puzzle)
 // console.log('Do sth Else')
+
+// ----------------------------------------------
+// PROMISE
+getPuzzlePromise('2').then((puzzle) => {
+    console.log(puzzle)
+}, (error) =>{
+    console.log(error)
+})

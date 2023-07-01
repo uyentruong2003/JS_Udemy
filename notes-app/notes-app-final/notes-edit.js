@@ -1,3 +1,5 @@
+'use strict' //help with debugging
+
 const noteId = location.hash.substring(1) //exclude the hash
 let notes = getSavedNotes()
 let note = notes.find(function (note){

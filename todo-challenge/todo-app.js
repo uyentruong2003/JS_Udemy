@@ -7,6 +7,7 @@ const filters = {
 
 // OFFICIAL PROGRAM:
 let todos = getSavedTodos()
+'use strict' //help with debugging
 
 sortTodos(todos)
 renderTodos(todos, filters)
