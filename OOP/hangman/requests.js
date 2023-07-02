@@ -49,8 +49,21 @@ const getPuzzlePromise = (wordCount) => new Promise ((resolve, reject) => {
             const data = JSON.parse(e.target.responseText)
             resolve(data.puzzle)
         } else if (e.target.readyState === 4){
-            reject('An error occurred')
+            reject('Promise error')
         }
     })
 })
 
+// ----------------------------------------------
+// FETCH API
+const fetchPuzzle = (wordCount) => {
+    return fetch(`http://puzzle.mead.io/puzzle?wordCount=${wordCount}`).then((response) => {
+        if (response.status===200) {
+            return response.json()
+        }else {
+            throw new Error ('Unable to fetch the puzzle')
+        }
+    }).then((data) => {
+        return data.puzzle
+    })
+}

@@ -45,3 +45,11 @@ getPuzzlePromise('2').then((puzzle) => {
 }, (error) =>{
     console.log(error)
 })
+
+// ----------------------------------------------
+// FETCH API
+fetchPuzzle('1').then((puzzle) => {
+    console.log(puzzle)
+}).catch((err) => {
+    console.log(err)
+})

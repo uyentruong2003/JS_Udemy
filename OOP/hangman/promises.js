@@ -96,5 +96,7 @@ getDataPromiseChaining(10).then((data) => {
     console.log(`Promise data: ${data}`)
 }, (err) => {
     console.log(err)
+}).catch((err) => {
+    console.log(err)
 })
 
