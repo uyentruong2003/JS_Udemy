@@ -70,7 +70,7 @@ getDataCallback(2, (err,data) => {
 })
 
 // Alternatives: way to fix callback hell using promise
-const getDataPromiseChaining = (num) => new Promises((resolve, reject) => {
+const getDataPromiseChaining = (num) => new Promise((resolve, reject) => {
     setTimeout(() => {
         typeof num === 'number' ? resolve(num*2) : reject('Number must be provided')
     },2000)

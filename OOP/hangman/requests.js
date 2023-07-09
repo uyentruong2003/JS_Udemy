@@ -1,23 +1,23 @@
 // // ----------------------------------------------
 // // CALLBACK FUNCTION: Pass the function from app.js into this getPuzzle function
 // // This is an example of ASYNCHRONOUS EXECUTION
-// const getPuzzle = (wordCount, callback) => {
-//     const request = new XMLHttpRequest()
-//     request.open('GET',`http://puzzle.mead.io/puzzle`)
-//     request.send()
+const getPuzzle = (wordCount, callback) => {
+    const request = new XMLHttpRequest()
+    request.open('GET',`https://puzzle.mead.io/puzzle`)
+    request.send()
 
-//     // Pass in callback function --> Asynchronous execution
-//     request.addEventListener('readystatechange',(e) =>{
-//         //readyState: check which state the HTTP operation on request is at; 4 is done
-//         if(e.target.readyState === 4 && e.target.status === 200){
-//             data = JSON.parse(e.target.responseText)
-//             //plug the data into the call back function in the app.js
-//             callback(undefined,data.puzzle)
-//         } else if (e.target.readyState === 4){
-//             callback("An error has occurred", undefined)
-//         }
-//     })
-// }
+    // Pass in callback function --> Asynchronous execution
+    request.addEventListener('readystatechange',(e) =>{
+        //readyState: check which state the HTTP operation on request is at; 4 is done
+        if(e.target.readyState === 4 && e.target.status === 200){
+            data = JSON.parse(e.target.responseText)
+            //plug the data into the call back function in the app.js
+            callback(undefined,data.puzzle)
+        } else if (e.target.readyState === 4){
+            callback("An error has occurred", undefined)
+        }
+    })
+}
 // // ----------------------------------------------
 // // ASYNCHRONOUS VS. SYNCHRONOUS EXECUTION
 // // Asynchronous: the next steps will still be executed even though the request hasn't been done processing
@@ -25,7 +25,7 @@
 // const getPuzzleSync = () => {
 //     const request = new XMLHttpRequest()
 //     // FALSE- indicating that the program will not continue until the request is done
-//     request.open('GET','http://puzzle.mead.io/puzzle', false)
+//     request.open('GET','https://puzzle.mead.io/puzzle', false)
 //     request.send()
 
 //     // NOT using eventlistener for the request ==> it will be synchronous execution
@@ -41,7 +41,7 @@
 // PROMISE: replacing callbacks to operate asynchronous execution --> simpler & neater codes
 const getPuzzlePromise = (wordCount) => new Promise ((resolve, reject) => {
     const request = new XMLHttpRequest()
-    request.open ('GET', `http://puzzle.mead.io/puzzle?wordCount=${wordCount}`)
+    request.open ('GET', `https://puzzle.mead.io/puzzle?wordCount=${wordCount}`)
     request.send()
 
     request.addEventListener('readystatechange',(e) =>{
@@ -56,14 +56,46 @@ const getPuzzlePromise = (wordCount) => new Promise ((resolve, reject) => {
 
 // ----------------------------------------------
 // FETCH API
+// Instead of creating an XMLHTTPRequest & a Promise, using fetch 
+// integrates the 2 & shorten the codes
 const fetchPuzzle = (wordCount) => {
-    return fetch(`http://puzzle.mead.io/puzzle?wordCount=${wordCount}`).then((response) => {
-        if (response.status===200) {
+    return fetch(`https://puzzle.mead.io/puzzle?wordCount=${wordCount}`,{})
+    // check if the request is successful --> convert to json obj & return as a Promise
+    .then((response) => {
+        if (response.ok){
             return response.json()
-        }else {
-            throw new Error ('Unable to fetch the puzzle')
+        } else { // if error, throw a new error
+            throw new Error('Fetch error occurred')
         }
-    }).then((data) => {
+    })
+    // access the data in the response & return
+    .then ((data) => {
         return data.puzzle
     })
+} // continue codes in apps to print in console if the data is available
+
+//stand-alone fetch (no following codes in app.js)
+fetch('https://puzzle.mead.io/puzzle?wordCount=2', {}).then((response) => {
+    if (response.status===200) {
+        return response.json()
+    }else {
+        throw new Error ('Unable to fetch the puzzle')
+    }
+}).then((data) => {
+    console.log(data.puzzle)
+}).catch((error) => {
+    console.log(error)
+})
+
+// ----------------------------------------------
+// ASYNC-AWAIT
+// An alternative for promise chaining
+const asyncAwaitPuzzle = async (wordCount) => {
+    const response = await fetch(`https://puzzle.mead.io/puzzle?wordCount=${wordCount}`,{})
+    if (response.ok) {
+        const data = await response.json()
+        return data.puzzle
+    } else {
+        throw new Error ('Unable to async-await')
+    }
 }

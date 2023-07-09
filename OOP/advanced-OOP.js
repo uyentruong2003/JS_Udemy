@@ -220,41 +220,41 @@
 
 // // ----------------------------------------------
 // // CALL BACK FUNCTION & ASYNCHRONOUS EXECUTION
-
+const countryCode = 'VN'
 // // Challenge
-// const countryCode = 'VN'
-// // making a function that accepts a callback function as an argument
-// const getCountry= (countryCode, callback) =>{
-//     const countryRequest = new XMLHttpRequest()
-//     countryRequest.open('GET','http://restcountries.com/v3.1/all')
-//     countryRequest.send()
+// making a function that accepts a callback function as an argument
+const getCountry= (countryCode, callback) =>{
+    const countryRequest = new XMLHttpRequest()
+    //get all data
+    countryRequest.open('GET','https://restcountries.com/v3.1/all')
+    countryRequest.send()
 
-//     // event listener
-//     countryRequest.addEventListener('readystatechange', (e) => {
-//         //if successful fetching:
-//         if (e.target.readyState === 4 && e.target.status === 200){
-//             data = JSON.parse(e.target.responseText)
-//             //find the country with code VN
-//             myCountry = data.find((country)=> {return country.alpha2Code === countryCode})
-//             callback(undefined,myCountry)
-//         }  else if (e.target.readyState === 4){
-//             console.log("Unable to fetch data", undefined)
-//         }
-//     })
+    // event listener
+    countryRequest.addEventListener('readystatechange', (e) => {
+        //if successful fetching:
+        if (e.target.readyState === 4 && e.target.status === 200){
+            data = JSON.parse(e.target.responseText)
+            // console.log(data)
+            //find the country with code VN
+            myCountry = data.find((country)=> {return country.cca2 === countryCode})
+            callback(undefined,myCountry)
+        }  else if (e.target.readyState === 4){
+            console.log("Unable to fetch data", undefined)
+        }
+    })
 
-// }
+}
 
-// getCountry(countryCode,(error, country) => {
-//     if (error){
-//         console.log(`Error: ${error}`)
-//     } else {
-//         console.log(`Country name: ${country.name}`)
-//     }
-// })
+getCountry(countryCode,(error, country) => {
+    if (error){
+        console.log(`Error: ${error}`)
+    } else {
+        console.log(`Call back: ${country.name.common}`)
+    }
+})
 
 // // ----------------------------------------------
-// // PROMISE
-const countryCode = 'VN'
+// // PROMISE: instead of using callbacks, using promise so the codes are neater
 getCountryPromise = (countryCode) => new Promise ((resolve, reject) => {
     const request = new XMLHttpRequest()
     request.open ('GET',`https://restcountries.com/v3.1/alpha?codes=${countryCode}`)
@@ -270,8 +270,9 @@ getCountryPromise = (countryCode) => new Promise ((resolve, reject) => {
     })
 })
 
+// Display on screen
 getCountryPromise(countryCode).then((countryName) => {
-    console.log(countryName)
+    console.log(`Promise: ${countryName}`)
     //print on screen
     const textEl = document.querySelector('#display-country')
     textEl.textContent = countryName
@@ -279,17 +280,85 @@ getCountryPromise(countryCode).then((countryName) => {
     console.log(error)
 })
 
-// ----------------------------------------------
-// FETCH API
-//stand-alone fetch
-fetch('http://puzzle.mead.io/puzzle?wordCount=2', {}).then((response) => {
-    if (response.status===200) {
-        return response.json()
-    }else {
-        throw new Error ('Unable to fetch the puzzle')
-    }
-}).then((data) => {
-    console.log(data.puzzle)
+// // ----------------------------------------------
+// // FETCH API: fetch() integrates XMLHTTPRequest & Promise in one
+// Challenge:
+const fetchCountry = (countryCode) => {
+    return fetch(`https://restcountries.com/v3.1/alpha?codes=${countryCode}`, {})
+    // check if the request is successful --> convert to json & return as a Promise
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else { // if error, throw a new error
+                throw new Error('Fetch error');
+            }
+        })
+        // access the data in the response & return
+        .then((data) => {
+            return data[0].name.common;
+        });
+};
+
+
+fetchCountry(countryCode)
+    .then((countryName) => {
+        console.log(`Fetch ver 1: ${countryName}`);
+    // catch the error thrown
+    }).catch((error) => {
+        console.log(error);
+    });
+
+
+// The promise & fetch example above fetch the country name by passing the country code directly into the URL
+// This below example fetches all data and find the country with the same countryCode as specified
+const fetchCountryV2 = (countryCode) => {
+    return fetch('https://restcountries.com/v3.1/all')
+    .then((response) => {
+        if (response.status === 200) {
+            return response.json()
+        } else {
+            throw new Error('Fetch ver2 error')
+        }
+    })
+    .then((data) => data.find((country) => {return country.cca2 === countryCode}))
+}
+
+fetchCountryV2(countryCode)
+.then((country) => {
+    console.log(`Fetch ver 2: ${country.name.common}`)
+})
+.catch((error) => {
+    console.log(error)
+})
+
+// 1. Create getLoc which takes no arg
+// 2. Setup getLoc to make a request to the url and parse the data
+// 3. Use getLoc to print the city, region, and country info
+
+const fetchLoc = () => {
+    return fetch("http://ipinfo.io/json?token=64c6e25bebbd56")
+    .then((response) => {
+        if (response.ok) {
+            return response.json()
+        } else {
+            throw new Error("Unable to fetch location")
+        }
+    })
+    .then((data) => {
+        return data
+    })
+}
+fetchLoc().then((myLoc) => {
+    console.log(`Based on your computer's IP address (${myLoc.ip}), you're currently in ${myLoc.city}, ${myLoc.country}`)
+}).catch((err) => {
+    console.log(err)
+})
+
+// Promise Chaining to chain fetchLoc and fetchCountryV2 together
+fetchLoc().then((loc) => {
+    return fetchCountryV2(loc.country)
+}).then((country) => {
+    console.log(`I am chaining fetchLoc and fetchCountryV2, here's the result: ${country.name.common}`)
 }).catch((error) => {
     console.log(error)
 })
