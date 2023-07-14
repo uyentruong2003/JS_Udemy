@@ -362,3 +362,70 @@ fetchLoc().then((loc) => {
 }).catch((error) => {
     console.log(error)
 })
+
+// ----------------------------------------------
+// ASYNC-AWAIT
+// An alternative way for promise chaining
+
+// Challenge:
+// 1. Convert getCountry to an async function that uses await
+// 2. Convert getLoc to an async function that uses await
+
+// Async-await getCountry
+const getCountryAsync = async (countryCode) => {
+    const response = await fetch('https://restcountries.com/v3.1/all')
+    if (response.ok){
+        const data = await response.json()
+        return data.find((country) => {return country.cca2 === countryCode})
+    } else {
+        throw new Error ('Unable to async-await country')
+    }
+}
+
+getCountryAsync('VN').then((country) => {
+    console.log(`Country Async-Await: ${country.name.common}`)
+}).catch((error) => {
+    console.log(error)
+})
+
+// Async-await getLoc
+const getLocAsync = async () => {
+    const response = await fetch("http://ipinfo.io/json?token=64c6e25bebbd56")
+    if (response.ok){
+        const data = await response.json()
+        return data
+    } else {
+        throw new Error ("Unable to async-await loc")
+    }
+}
+
+getLocAsync().then((loc) => {
+    console.log(`Loc Async-Await: ip address- ${loc.ip}, city- ${loc.city}, country- ${loc.country}`)
+}).catch((error) => {
+    console.log(error)
+})
+
+//Chaining getCountryAsync and getLocAsync
+getLocAsync().then((loc) => {
+    return getCountryAsync(loc.country)
+}).then((country)  => {
+    console.log(`I am chaining getLocAsync and getCountryAsync, here's the result: ${country.name.common}`)
+}).catch((error) => {
+    console.log(error)
+})
+
+// An alternative to chaining- create another async function that calls 
+// the getCountryAsync and getLocAsync
+
+const asyncCountryFromLoc = async () => {
+
+    const loc = await getLocAsync()
+    const country = await getCountryAsync(loc.country)
+    return country
+}
+
+asyncCountryFromLoc().then((country) => {
+    console.log(`Async Country From Loc: ${country.name.common}`)
+}).catch((error) => {
+    console.log(error)
+})
